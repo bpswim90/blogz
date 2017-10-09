@@ -5,8 +5,28 @@
     </head>
     <body>
         <h1>Add new post</h1>
-        <!--TODO: Add blog post form-->
+        <form method='POST'>
+            <div>
+                <label>
+                    New blog post title:
+                    <br/>
+                    <input type="text" name='title' />
+                </label>
+            </div>
+            <div>
+                <label>
+                    New blog:
+                    <br/>
+                    <textarea name='content' rows='8'></textarea>
+                </label>
+            </div>
+            <div>
+                <input type="submit" value='Add Entry' />
+            </div>
+        </form>
+
         <hr />
+
         <h1>Posts</h1>
         <!--TODO: List old blog posts-->
     </body>
