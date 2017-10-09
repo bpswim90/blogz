@@ -24,13 +24,27 @@ def blog():
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def new_post():
+
     if request.method == 'POST':
         blog_title = request.form['title']
         blog_content = request.form['content']
-        new_blog = Blog(blog_title, blog_content)
-        db.session.add(new_blog)
-        db.session.commit()
-        return redirect('/blog')
+        title_error = ''
+        content_error = ''
+
+        if blog_title == '':
+            title_error = "Please enter a title."
+
+        if blog_content == '':
+            content_error = "Please fill in the body."
+
+        if not (title_error or content_error):
+            new_blog = Blog(blog_title, blog_content)
+            db.session.add(new_blog)
+            db.session.commit()
+            return redirect('/blog')
+        else:
+            return render_template('newpost.html', title_error=title_error,
+                content_error=content_error, title=blog_title, content=blog_content)
     return render_template('newpost.html')
 
 @app.route('/', methods=['POST', 'GET'])

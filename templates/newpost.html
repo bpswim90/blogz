@@ -7,15 +7,27 @@
                 <label>
                     New blog post title:
                     <br/>
-                    <input type="text" name='title' />
+                    <input type="text" name='title' value='{{title}}'/>
                 </label>
+                <br/>
+                <span class="error">
+                {% if title_error %}
+                    {{title_error}}
+                {% endif %}
+                </span>
             </div>
             <div>
                 <label>
                     New blog:
                     <br/>
-                    <textarea name='content' rows='8'></textarea>
+                    <textarea name='content' rows='8'>{{content}}</textarea>
                 </label>
+                <br/>
+                <span class="error">
+                {% if content_error %}
+                    {{content_error}}
+                {% endif %}
+                </span>
             </div>
             <div>
                 <input type="submit" value='Add Entry' />
