@@ -7,9 +7,25 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:blog@local
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 
-@app.route('/')
+class Blog(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(120))
+    content = db.Column(db.String(120))
+
+    def __init__(self, title, content):
+        self.title = title
+        self.content = content
+
+@app.route('/', methods=['POST', 'GET'])
 def index():
-    return render_template('index.html')
 
+    if request.method == 'POST':
+        return redirect('/')
 
-app.run()
+    blogs = Blog.query.all()
+
+    return render_template('index.html', blogs=blogs)
+
+if __name__ == '__main__':
+    app.run()

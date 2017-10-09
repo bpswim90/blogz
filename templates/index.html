@@ -28,6 +28,15 @@
         <hr />
 
         <h1>Posts</h1>
-        <!--TODO: List old blog posts-->
+        {% if blogs|length == 0 %}
+        <p>No blogs yet</p>
+        {% else %}
+
+            {% for blog in blogs %}
+                <h3>{{blog.title}}</h3>
+                <p>{{blog.content}}</p>
+                <hr />
+            {% endfor %}
+        {% endif %}
     </body>
 </html>
