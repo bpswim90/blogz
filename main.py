@@ -24,7 +24,6 @@ def blog():
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def new_post():
-
     if request.method == 'POST':
         blog_title = request.form['title']
         blog_content = request.form['content']
@@ -45,6 +44,7 @@ def new_post():
         else:
             return render_template('newpost.html', title_error=title_error,
                 content_error=content_error, title=blog_title, content=blog_content)
+
     return render_template('newpost.html')
 
 @app.route('/', methods=['POST', 'GET'])
