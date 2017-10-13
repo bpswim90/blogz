@@ -12,10 +12,23 @@ class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
     content = db.Column(db.String(120))
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self, title, content):
+    def __init__(self, title, content, owner):
         self.title = title
         self.content = content
+        self.owner = owner
+
+class User(db.Model):
+
+   id = db.Column(db.Integer, primary_key=True)
+   username = db.Column(db.String(120))
+   password = db.Column(db.String(120))
+   blogs = db.relationship('Blog', backref='owner')
+
+   def __init__(self, username, password):
+       self.username = username
+       self.password = password
 
 @app.route('/blog')
 def blog():
@@ -32,6 +45,7 @@ def new_post():
     if request.method == 'POST':
         blog_title = request.form['title']
         blog_content = request.form['content']
+        blog_owner = User.query.filter_by(username=session['username']).first()
         title_error = ''
         content_error = ''
 
@@ -42,7 +56,7 @@ def new_post():
             content_error = "Please fill in the body."
 
         if not (title_error or content_error):
-            new_blog = Blog(blog_title, blog_content)
+            new_blog = Blog(blog_title, blog_content, blog_owner)
             db.session.add(new_blog)
             db.session.commit()
             new_blog_id = str(new_blog.id)
