@@ -70,8 +70,11 @@ def new_post():
 #@app.route('/signup')
 #TODO - add signup route
 
-#@app.route('/login')
-#TODO - add login route
+@app.route('/login', methods=['POST', 'GET'])
+def log_in():
+    username = ''
+    # TODO: login will keep username put in if incorrect pass given
+    return render_template('login.html', username=username)
 
 #@app.route('/index')
 #TODO - add index route
