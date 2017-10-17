@@ -67,6 +67,15 @@ def new_post():
 
     return render_template('newpost.html')
 
+#@app.route('/signup')
+#TODO - add signup route
+
+#@app.route('/login')
+#TODO - add login route
+
+#@app.route('/index')
+#TODO - add index route
+
 @app.route('/', methods=['POST', 'GET'])
 def index():
     blogs = Blog.query.all()
