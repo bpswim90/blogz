@@ -68,9 +68,41 @@ def new_post():
 
     return render_template('newpost.html')
 
-@app.route('/signup')
+@app.route('/signup', methods=['POST', 'GET'])
 def sign_up():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        verify = request.form['verify']
+
+        if username == "" or password == "" or verify == "":
+            flash("One or more fields left blank.","error")
+            return redirect("/signup")
+
+        if User.query.filter_by(username=username).first():
+            flash("Username already exists.","error")
+            return redirect("/signup")
+
+        if password != verify:
+            flash("Passwords do not match.","error")
+            return redirect("/signup")
+
+        if len(username) < 3 or len(username) > 20:
+            flash("Invalid username.","error")
+            return redirect("/signup")
+
+        if len(password) < 3 or len(password) > 20:
+            flash("Invalid password.","error")
+            return redirect("/signup")
+
+        new_user = User(username,password)
+        db.session.add(new_user)
+        db.session.commit()
+        session['username'] = username
+        return redirect('/newpost')
+
     return render_template('signup.html')
+
 
 @app.route('/login', methods=['POST', 'GET'])
 def log_in():
