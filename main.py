@@ -132,10 +132,10 @@ def log_out():
     del session['username']
     return redirect('/blog')
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/')
 def index():
-    blogs = Blog.query.all()
-    return render_template('blog.html', blogs=blogs)
+    users = User.query.all()
+    return render_template('index.html',users=users)
 
 if __name__ == '__main__':
     app.run()
