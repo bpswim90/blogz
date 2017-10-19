@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template, session
+from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -77,9 +77,12 @@ def log_in():
         username = request.form['username']
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
-        if user:
+        if user and user.password == password:
             session['username'] = username
             return redirect('/newpost')
+        elif user and user.password != password:
+            flash('Incorrect password.','error')
+            return redirect('/login')
     return render_template('login.html')
 
 #@app.route('/index')
