@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, session
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -6,6 +6,7 @@ app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:password@localhost:8889/blogz'
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
+app.secret_key = '239xcvoiun39uifgujizoujer09uvx43dfpogh0cw'
 
 class Blog(db.Model):
 
@@ -72,9 +73,14 @@ def new_post():
 
 @app.route('/login', methods=['POST', 'GET'])
 def log_in():
-    username = ''
-    # TODO: login will keep username put in if incorrect pass given
-    return render_template('login.html', username=username)
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = User.query.filter_by(username=username).first()
+        if user:
+            session['username'] = username
+            return redirect('/newpost')
+    return render_template('login.html')
 
 #@app.route('/index')
 #TODO - add index route
