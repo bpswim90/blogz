@@ -121,8 +121,10 @@ def log_in():
             return redirect('/login')
     return render_template('login.html')
 
-#@app.route('/index')
-#TODO - add index route
+@app.route('/logout')
+def log_out():
+    del session['username']
+    return redirect('/blog')
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
