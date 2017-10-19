@@ -83,6 +83,9 @@ def log_in():
         elif user and user.password != password:
             flash('Incorrect password.','error')
             return redirect('/login')
+        elif not user:
+            flash('Username does not exist.','error')
+            return redirect('/login')
     return render_template('login.html')
 
 #@app.route('/index')
