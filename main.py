@@ -31,6 +31,12 @@ class User(db.Model):
        self.username = username
        self.password = password
 
+@app.before_request
+def require_login():
+    allowed_routes = ['blog','sign_up','log_in','index']
+    if request.endpoint not in allowed_routes and 'username' not in session:
+        return redirect('/login')
+
 @app.route('/blog')
 def blog():
     if request.args.get('id'):
