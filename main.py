@@ -68,8 +68,9 @@ def new_post():
 
     return render_template('newpost.html')
 
-#@app.route('/signup')
-#TODO - add signup route
+@app.route('/signup')
+def sign_up():
+    return render_template('signup.html')
 
 @app.route('/login', methods=['POST', 'GET'])
 def log_in():
