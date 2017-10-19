@@ -43,6 +43,10 @@ def blog():
         blog_id = request.args.get('id')
         blog = Blog.query.filter_by(id=blog_id).first()
         return render_template('blog_entry.html',blog=blog)
+    elif request.args.get('user'):
+        user_id = request.args.get('user')
+        blogs = Blog.query.filter_by(owner_id=user_id).all()
+        return render_template('user_page.html',blogs=blogs)
     else:
         blogs = Blog.query.all()
         return render_template('blog.html', blogs=blogs)
