@@ -5,6 +5,8 @@
         <style>
             body {
                 font-family: Arial, sans-serif;
+                width: 800px;
+                margin: auto;
             }
             div {
                 padding: 10px;
@@ -17,15 +19,28 @@
                 font-size: .75em;
                 font-style: italic;
             }
+            nav div {
+                display: inline-block;
+            }
+            nav a {
+                padding: 5px;
+            }
+            nav #login-logout {
+                float: right;
+            }
         </style>
     </head>
     <header>
         <nav>
-            <a href="/">Home</a>
-            <a href="/blog">Main Blog Page</a>
-            <a href="/newpost">Add a Blog Entry</a>
-            <a href="/login">Log In</a>
-            <a href="/logout">Log Out</a>
+            <div>
+                <a href="/">Home</a>
+                <a href="/blog">All Blog Posts</a>
+                <a href="/newpost">Add a Blog Entry</a>
+            </div>
+            <div id="login-logout">
+                <a href="/login">Log In</a>
+                <a href="/logout">Log Out</a>
+            </div>
         </nav>
     </header>
     <body>
